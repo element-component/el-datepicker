@@ -1,0 +1,51 @@
+@import './vars.css';
+
+.daterangepicker {
+  min-width: 600px;
+}
+
+.daterangepicker .dt-picker-content {
+  margin: 0;
+}
+
+.daterangepicker table {
+  table-layout: fixed;
+  margin: 5px;
+}
+
+.daterangepicker-content {
+  float: left;
+  width: 50%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px;
+}
+
+.daterangepicker-content:first-of-type {
+  border-right: 1px solid var(--datepicker-inner-border-color);
+}
+
+.daterangepicker-header {
+  position: relative;
+  text-align: center;
+  height: 28px;
+}
+
+.daterangepicker-header button {
+  float: left;
+}
+
+.daterangepicker-content:last-of-type .daterangepicker-header button {
+  float: right;
+}
+
+.daterangepicker-header div {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 50px;
+}
+
+.daterangepicker-content:last-of-type .daterangepicker-header div {
+  margin-left: 50px;
+  margin-right: 50px;
+}

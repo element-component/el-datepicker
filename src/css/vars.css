@@ -1,0 +1,12 @@
+:root {
+  --datepicker-color: #333;
+  --datepicker-off-color: #ddd;
+  --datepicker-header-color: #999;
+  --datepicker-icon-color: #bbb;
+  --datepicker-border-color: #ccc;
+  --datepicker-inner-border-color: #e4e4e4;
+  --datepicker-cell-hover-color: #f0f0f0;
+  --datepicker-inrange-color: #e6f1fe;
+  --datepicker-active-color: #2e90fe;
+  --datepicker-text-hover-color: #2e90fe;
+}

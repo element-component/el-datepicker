@@ -1,0 +1,49 @@
+@import "./vars.css";
+
+.timespinner {
+  width: 200px;
+  text-align: center;
+}
+
+.timespinner-slot,
+.timespinner-separator {
+  display: inline-block;
+  height: 80px;
+  line-height: 74px;
+}
+
+.timespinner-slot {
+  position: relative;
+  width: 40px;
+  text-align: center;
+}
+
+.timespinner-slot-arrow {
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  height: 20px;
+  line-height: 20px;
+  color: var(--datepicker-icon-color);
+}
+
+.timespinner-slot-arrow:hover {
+  color: var(--datepicker-text-hover-color);
+}
+
+.timespinner-slot-arrow.bottom {
+  top: auto;
+  bottom: 0;
+}
+
+.timespinner-editor {
+  width: 30px;
+  text-align: center;
+  line-height: 30px;
+  background-color: #f7f7f7;
+  border: 1px solid #ccc;
+  color: #333;
+}

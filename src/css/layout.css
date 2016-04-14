@@ -1,0 +1,92 @@
+@import './vars.css';
+
+.dt-picker {
+  font-size: 12px;
+  color: var(--datepicker-color);
+  border: 1px solid var(--datepicker-border-color);
+  box-shadow: 0 2px 6px #ccc;
+  background: #fff;
+  line-height: 20px;
+  overflow: hidden;
+}
+
+.dt-picker-header {
+  position: relative;
+  margin: 12px;
+  text-align: center;
+}
+
+.dt-picker *[slot=sidebar] + .dt-picker-body,
+.dt-picker-sidebar + .dt-picker-body {
+  margin-left: 100px;
+}
+
+.dt-picker-body-wrapper {
+  overflow: hidden;
+}
+
+.dt-picker-footer {
+  border-top: 1px solid var(--datepicker-inner-border-color);
+  padding: 4px;
+  text-align: right;
+}
+
+.dt-picker-content {
+  position: relative;
+  margin: 12px 12px 0 12px;
+}
+
+.dt-picker *[slot=sidebar],
+.dt-picker-sidebar {
+  float: left;
+  width: 100px;
+  border-right: 1px solid var(--datepicker-inner-border-color);
+  box-sizing: border-box;
+  margin-bottom: -99999px;
+  padding: 12px 0 99999px 0;
+}
+
+.dt-picker-shortcut {
+  display: block;
+  width: 100%;
+  border: 0;
+  background-color: transparent;
+  line-height: 24px;
+  padding-left: 12px;
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+}
+
+.dt-picker-shortcut:hover {
+  background-color: #f0f0f0;
+}
+
+.dt-picker-shortcut.active {
+  background-color: #e6f1fe;
+  color: var(--datepicker-active-color);
+}
+
+.dt-picker-iconbtn {
+  font-size: 12px;
+  color: var(--datepicker-icon-color);
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.dt-picker-iconbtn:hover {
+  color: var(--datepicker-text-hover-color);
+}
+
+.dt-picker-btn {
+  border: 1px solid #dcdcdc;
+  color: #333;
+  line-height: 24px;
+  border-radius: 2px;
+  padding: 0 20px;
+  cursor: pointer;
+  background-color: transparent;
+  outline: none;
+}

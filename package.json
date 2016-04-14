@@ -1,0 +1,18 @@
+{
+  "name": "datepicker",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --progress --hide-modules --watch",
+    "build": "NODE_ENV=production webpack --progress --hide-modules",
+    "deploy": "NODE_ENV=production webpack --progress --hide-modules --output-public-path /dist/"
+  },
+  "dependencies": {
+    "fecha": "^2.1.0",
+    "vue": "^1.0.0",
+    "wind-dom": "0.0.3"
+  },
+  "author": "long.zhang@ele.me",
+  "license": "MIT"
+}

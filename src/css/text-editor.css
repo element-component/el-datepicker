@@ -1,0 +1,116 @@
+@import "./vars.css";
+
+.d-texteditor {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  height: 28px;
+}
+
+.d-texteditor.have-trigger .d-texteditor-editor {
+  padding-right: 20px;
+}
+
+.d-texteditor .d-texteditor-editor {
+  width: 100%;
+}
+
+.d-texteditor-trigger {
+  cursor: pointer;
+  position: absolute;
+  display: inline-block;
+  width: 20px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  line-height: 28px;
+  color: var(--datepicker-icon-color);
+
+  &:hover {
+    color: var(--datepicker-text-hover-color);
+  }
+}
+
+.d-texteditor-clear {
+  cursor: pointer;
+  position: absolute;
+  display: none;
+  width: 20px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  line-height: 28px;
+  color: var(--datepicker-icon-color);
+
+  &:hover {
+    color: var(--datepicker-text-hover-color);
+  }
+}
+
+.d-texteditor.have-trigger .d-texteditor-clear {
+  right: 20px;
+}
+
+.d-texteditor.filled:hover .d-texteditor-clear,
+.d-texteditor.filled.active .d-texteditor-clear {
+  display: inline-block;
+}
+
+.d-texteditor-editor {
+  border: 1px solid #e5e6e7;
+  border-radius: 2px;
+  line-height: 18px;
+  padding: 4px 2px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.3s;
+}
+
+.d-texteditor-editor::-webkit-input-placeholder {
+  color: #bbb;
+  font-size: 12px;
+}
+
+.d-texteditor-editor::-moz-placeholder {
+  color: #bbb;
+  font-size: 12px;
+}
+
+.d-texteditor-editor:-ms-input-placeholder {
+  color: #bbb;
+  font-size: 12px;
+}
+
+.d-texteditor-editor::placeholder {
+  color: #bbb;
+  font-size: 12px;
+}
+
+.d-texteditor-editor:focus,
+.d-texteditor.active .d-texteditor-editor {
+  outline: none;
+  border-color: #5da9ff;
+  box-shadow: 0 0 4px #2e90fe;
+}
+
+.d-texteditor.lg .d-texteditor-editor {
+  padding: 6px 4px;
+}
+
+.d-texteditor.sm .d-texteditor-editor {
+  padding: 1px 1px;
+}
+
+.d-texteditor .datepicker {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  z-index: 1;
+}
+
+.d-texteditor .timepicker {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  z-index: 1;
+}

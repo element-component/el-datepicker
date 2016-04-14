@@ -1,0 +1,8 @@
+*.swp
+*.log
+.DS_Store
+.sass-cache
+.idea
+bower_components
+node_modules
+dist

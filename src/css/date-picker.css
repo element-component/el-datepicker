@@ -1,0 +1,154 @@
+@import "./vars.css";
+@import "./layout.css";
+
+.datepicker {
+  min-width: 300px;
+}
+
+.datepicker .iconfont {
+  font-size: 12px;
+}
+
+.datepicker table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.datepicker-header-label {
+  font-size: 14px;
+  padding: 0 5px;
+  font-weight: 600;
+  line-height: 22px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.datepicker-header-label:hover {
+  color: var(--datepicker-text-hover-color);
+}
+
+.datepicker-header-label.active {
+  color: var(--datepicker-active-color);
+}
+
+.datepicker-prevbtn {
+  float: left;
+}
+
+.datepicker-nextbtn {
+  float: right;
+}
+
+.yeartable td,
+.monthtable td {
+  text-align: center;
+  padding: 0;
+  height: 36px;
+  cursor: pointer;
+}
+
+.yeartable td:hover,
+.monthtable td:hover {
+  background-color: var(--datepicker-cell-hover-color);
+}
+
+.yeartable td.current,
+.monthtable td.current {
+  background-color: var(--datepicker-active-color) !important;
+  color: #fff;
+}
+
+.datepicker-time-wrap {
+  text-align: center;
+}
+
+.datepicker-timelabel {
+  float: left;
+  cursor: pointer;
+  line-height: 30px;
+  margin-left: 10px;
+}
+
+.datetable td,
+.monthtable td,
+.yeartable td {
+  text-align: center;
+  padding: 6px 5px;
+  cursor: pointer;
+}
+
+.datetable td {
+  width: 36px;
+  height: 36px;
+  box-sizing: border-box;
+}
+
+.datetable th {
+  padding: 5px;
+  color: var(--datepicker-header-color);
+}
+
+.datetable td.nextmonth,
+.datetable td.prevmonth {
+  color: var(--datepicker-off-color);
+}
+
+.datetable td.available:hover {
+  background-color: var(--datepicker-cell-hover-color);
+}
+
+.datetable td.inrange {
+  background-color: var(--datepicker-inrange-color);
+  color: var(--datepicker-text-hover-color);
+}
+
+.datetable td.current,
+.datetable td.startdate,
+.datetable td.enddate {
+  border-radius: 4px;
+  background-color: var(--datepicker-active-color) !important;
+  color: #fff;
+}
+
+.datetable td.startdate {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.datetable td.enddate {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.datetable td.disabled {
+  background-color: #f4f4f4;
+  opacity: 1;
+  cursor: not-allowed;
+  color: #ccc;
+}
+
+.datetable td.startdate.enddate {
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+}
+
+.datetable td.week {
+  font-size: 80%;
+  color: var(--datepicker-header-color);
+}
+
+.datetable td.disabled {
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.datetable.weekmode .datetable-row:hover {
+  background-color: var(--datepicker-cell-hover-color);
+}
+
+.datetable.weekmode .datetable-row.current {
+  background-color: var(--datepicker-inrange-color);
+  color: var(--datepicker-text-hover-color);
+}
