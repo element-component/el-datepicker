@@ -20,8 +20,8 @@
 
 <script type="text/ecmascript-6">
   import { $t, getFirstDayOfMonth, getDayCountOfMonth, getWeekNumber, getStartDateOfMonth, DAY_DURATION } from '../util';
-
   import { hasClass } from 'wind-dom';
+  import Vue from 'vue';
 
   export default {
     props: {
@@ -130,7 +130,7 @@
 
             cell.disabled = typeof disabledDate === 'function' && disabledDate(new Date(time));
 
-            row[this.showWeekNumber ? j + 1 : j] = cell;
+            Vue.set(row, this.showWeekNumber ? j + 1 : j, cell);
           }
         }
 
