@@ -1,7 +1,7 @@
 <template>
   <div class="dt-picker">
     <div class="dt-picker-content">
-      <time-spinner v-ref:spinner :hours.sync="hours" :minutes.sync="minutes" :seconds.sync="seconds"></time-spinner>
+      <time-spinner v-ref:spinner :hours.sync="hours" :minutes.sync="minutes" :seconds.sync="seconds" :show-seconds="showSeconds"></time-spinner>
     </div>
     <div class="dt-picker-footer">
       <button class="dt-picker-btn" @click="handleConfirm">确定</button>
@@ -27,10 +27,17 @@
     },
 
     props: {
-      date: {}
+      date: {},
+      format: {
+        default: 'HH:mm:ss'
+      }
     },
 
     computed: {
+      showSeconds() {
+        return (this.format || '').indexOf('ss') !== -1;
+      },
+
       hours: {
         get() {
           if (this.date) {

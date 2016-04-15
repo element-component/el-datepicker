@@ -327,6 +327,7 @@
           this.picker = new Vue(merge({ el: document.createElement('div'), replace: true }, Picker));
           this.picker.showTime = this.type === 'datetime' || this.type === 'datetimerange';
           this.picker.selectionMode = this.selectionMode;
+          this.picker.format = this.format;
           this.picker.$appendTo(this.$el);
 
           this.pickerVisible = true;

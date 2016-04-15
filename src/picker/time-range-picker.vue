@@ -2,10 +2,10 @@
   <div class="dt-picker">
     <div style="overflow: hidden;">
       <div class="dt-picker-content timerangepicker-content">
-        <time-spinner v-ref:min-spinner :hours.sync="minHours" :minutes.sync="minMinutes" :seconds.sync="minSeconds"></time-spinner>
+        <time-spinner v-ref:min-spinner :hours.sync="minHours" :minutes.sync="minMinutes" :seconds.sync="minSeconds" :show-seconds="showSeconds"></time-spinner>
       </div>
       <div class="dt-picker-content timerangepicker-content">
-        <time-spinner v-ref:max-spinner :hours.sync="maxHours" :minutes.sync="maxMinutes" :seconds.sync="maxSeconds"></time-spinner>
+        <time-spinner v-ref:max-spinner :hours.sync="maxHours" :minutes.sync="maxMinutes" :seconds.sync="maxSeconds" :show-seconds="showSeconds"></time-spinner>
       </div>
     </div>
     <div class="dt-picker-footer">
@@ -59,6 +59,10 @@
     },
 
     computed: {
+      showSeconds() {
+        return (this.format || '').indexOf('ss') !== -1;
+      },
+
       minHours: {
         get() {
           if (this.minTime) {
