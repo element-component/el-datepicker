@@ -4,12 +4,12 @@
       <slot name="sidebar" class="dt-picker-sidebar"></slot>
       <div class="dt-picker-body">
         <div class="dt-picker-header" v-show="currentView !== 'time'">
-          <button @click="prevYear" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
-          <button @click="prev" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
-          <span @click="handleYearClick" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ year }}年</span>
-          <span @click="handleMonthClick" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
-          <button @click="nextYear" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
-          <button @click="next" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
+          <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
+          <button @click="prevMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
+          <span @click="showYearPicker" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ year }}年</span>
+          <span @click="showMonthPicker" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
+          <button @click="nextYear" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
+          <button @click="nextMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
         </div>
 
         <div class="dt-picker-content">
@@ -97,19 +97,8 @@
     methods: {
       $t: $t,
 
-      isMonthActive(month) {
-        const date = this.date;
-        if (this.selectionMode !== 'month') {
-          return month === date.getMonth();
-        } else {
-          return this.value === date.getFullYear() + '-' + month;
-        }
-      },
-
       resetDate() {
         this.date = new Date(this.date);
-        this.year = this.date.getFullYear();
-        this.month = this.date.getMonth();
       },
 
       showMonthPicker() {
@@ -118,14 +107,6 @@
 
       showYearPicker() {
         this.currentView = 'year';
-      },
-
-      handleYearClick() {
-        this.showYearPicker();
-      },
-
-      handleMonthClick() {
-        this.showMonthPicker();
       },
 
       handleLabelClick() {
@@ -158,23 +139,6 @@
 
       prevYear() {
         this.year--;
-      },
-
-      prev() {
-        if (this.currentView === 'date') {
-          this.prevMonth();
-        } else {
-          this.prevYear();
-        }
-      },
-
-      next() {
-        var currentView = this.currentView;
-        if (currentView === 'date') {
-          this.nextMonth();
-        } else {
-          this.nextYear();
-        }
       },
 
       handleTimePick(picker) {
