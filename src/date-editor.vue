@@ -33,7 +33,7 @@
     datetimerange: 'YYYY-MM-DD HH:mm:ss'
   };
 
-  const HAVE_TRIGGER_TYPES = ['date', 'datetime', 'time', 'week', 'month', 'daterange', 'timerange', 'datetimerange'];
+  const HAVE_TRIGGER_TYPES = ['date', 'datetime', 'time', 'fixed-time', 'week', 'month', 'daterange', 'timerange', 'datetimerange'];
   const RANGE_SEPARATOR = '  ~  ';
   const DATE_FORMATTER = function(value, format) {
     return formatDate(value, format);
@@ -311,6 +311,8 @@
         const type = this.type;
         if (type === 'time') {
           return require('./picker/time-picker.vue');
+        } else if (type === 'fixed-time') {
+          return require('./picker/time-select-picker.vue');
         } else if (type === 'timerange') {
           return require('./picker/time-range-picker.vue');
         } else if (type === 'daterange' || type === 'datetimerange') {
@@ -346,6 +348,8 @@
           if (this.value instanceof Date) {
             this.picker.date = new Date(this.value.getTime());
             this.picker.resetView && this.picker.resetView();
+          } else {
+            this.picker.value = this.value;
           }
         }
       }

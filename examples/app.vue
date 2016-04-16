@@ -8,6 +8,10 @@
   </div>
 
   <div class="block">
+    <date-editor type="fixed-time" placeholder="选择固定时间" style="width: 240px;"></date-editor>
+  </div>
+
+  <div class="block">
     <date-editor type="timerange" placeholder="选择时间范围" style="width: 240px;"></date-editor>
   </div>
 
