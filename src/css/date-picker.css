@@ -58,7 +58,8 @@
   color: #fff;
 }
 
-.datepicker-time-wrap {
+.datepicker-timewrap {
+  padding: 10px;
   text-align: center;
 }
 

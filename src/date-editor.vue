@@ -16,7 +16,7 @@
 </style>
 
 <script type="text/ecmascript-6">
-  var Vue = require('vue');
+  import Vue from 'vue';
   import { merge, formatDate, parseDate, getWeekNumber } from './util';
   import { default as Dropdown } from './util/dropdown';
 
@@ -345,13 +345,20 @@
         } else {
           this.picker.$el.style.display = '';
           this.pickerVisible = true;
-          if (this.value instanceof Date) {
-            this.picker.date = new Date(this.value.getTime());
-            this.picker.resetView && this.picker.resetView();
-          } else {
-            this.picker.value = this.value;
-          }
         }
+
+        if (this.value instanceof Date) {
+          this.picker.date = new Date(this.value.getTime());
+          this.picker.resetView && this.picker.resetView();
+        } else {
+          this.picker.value = this.value;
+        }
+
+        Vue.nextTick(() => {
+          if (this.type.indexOf('time') !== -1) {
+            this.picker.focusEditor('hours');
+          }
+        });
       }
     }
   };

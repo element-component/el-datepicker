@@ -19,7 +19,7 @@
           <year-table :year.sync="year" v-show="currentView === 'year'" @pick="handleYearPick"></year-table>
           <month-table :month.sync="month" v-show="currentView === 'month'" @pick="handleMonthPick" ></month-table>
 
-          <div style="text-align: center;" v-if="showTime" v-show="currentView === 'date'">
+          <div class="datepicker-timewrap" style="text-align: center;" v-if="showTime" v-show="currentView === 'date'">
             <time-spinner :hours.sync="hours" :minutes.sync="minutes" :seconds.sync="seconds"></time-spinner>
           </div>
         </div>

@@ -92,6 +92,10 @@
         date.setSeconds(seconds);
 
         this.$emit('pick', date);
+      },
+
+      focusEditor(...args) {
+        return this.$refs.spinner.focusEditor(...args);
       }
     }
   };

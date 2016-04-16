@@ -3,19 +3,19 @@
     <span class="timespinner-slot">
       <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('hours')"></span>
       <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('hours', '+')"></span>
-      <input class="timespinner-editor" lazy number v-model="hours" />
+      <input v-el:hours-editor class="timespinner-editor" lazy number v-model="hours" @keydown="handleKeydown('hours', $event)"/>
     </span>
     <span class="timespinner-separator">:</span>
     <span class="timespinner-slot">
       <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('minutes')"></span>
       <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('minutes', '+')"></span>
-      <input class="timespinner-editor" lazy number v-model="minutes" />
+      <input v-el:minutes-editor class="timespinner-editor" lazy number v-model="minutes" @keydown="handleKeydown('minutes', $event)" />
     </span>
     <span class="timespinner-separator" v-if="showSeconds">:</span>
     <span class="timespinner-slot" v-if="showSeconds">
       <span class="timespinner-slot-arrow  iconfont icon-up" v-repeat-click="handleClick('seconds')"></span>
       <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('seconds', '+')"></span>
-      <input class="timespinner-editor" lazy number v-model="seconds" />
+      <input v-el:seconds-editor class="timespinner-editor" lazy number v-model="seconds" @keydown="handleKeydown('seconds', $event)" />
     </span>
   </span>
 </template>
@@ -138,9 +138,31 @@
     },
 
     methods: {
+      focusEditor(type) {
+        const editor = this.$els[type + 'Editor'];
+        if (editor) {
+          editor.focus();
+        }
+      },
+
       handleClick(type, operator) {
         if (TYPE_RANGE_MAP.hasOwnProperty(type)) {
           this[type] = adjust(type, operator, this[type]);
+        }
+      },
+
+      handleKeydown(type, event) {
+        const keyCode = event.keyCode;
+        if (keyCode === 38) { // up arrow
+          this[type] = adjust(type, '-', this[type]);
+        } else if (keyCode === 40) { // down arrow
+          this[type] = adjust(type, '+', this[type]);
+        } else if (keyCode === 13) {
+          if (type === 'hours') {
+            this.focusEditor('minutes');
+          } else if (type === 'minutes' && this.showSeconds) {
+            this.focusEditor('seconds');
+          }
         }
       }
     }

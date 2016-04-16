@@ -154,6 +154,10 @@
     methods: {
       handleConfirm() {
         this.$emit('pick', [this.minTime, this.maxTime]);
+      },
+
+      focusEditor(...args) {
+        return this.$refs.minSpinner.focusEditor(...args);
       }
     }
   };
