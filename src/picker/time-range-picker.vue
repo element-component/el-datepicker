@@ -55,6 +55,9 @@
         default() {
           return new Date();
         }
+      },
+      format: {
+        default: 'HH:mm:ss'
       }
     },
 

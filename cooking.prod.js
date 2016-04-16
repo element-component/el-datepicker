@@ -1,7 +1,7 @@
 module.exports = {
   use: 'vue',
 
-  webpack: function (provide, config) {
+  webpack: function(provide, config) {
     var ExtractTextPlugin = provide.ExtractTextPlugin;
     var webpack = provide.webpack;
 
