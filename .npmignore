@@ -1,0 +1,5 @@
+.idea
+*.log
+examples
+Makefile
+src

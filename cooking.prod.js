@@ -6,10 +6,10 @@ module.exports = {
     var webpack = provide.webpack;
 
     config.entry = {
-      'index': 'src/output.js',
-      'index.min': 'src/output.js'
+      'index': 'src/index.js'
     };
     config.devtool = false;
+    config.output.path = 'lib';
     config.output.filename = '[name].js';
     config.plugins = [
       new webpack.DefinePlugin({
