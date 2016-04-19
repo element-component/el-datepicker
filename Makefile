@@ -10,4 +10,4 @@ dev:
 test: build
 
 publish: build
-	npm run publish
+	npm publish

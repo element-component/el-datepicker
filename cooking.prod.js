@@ -27,7 +27,9 @@ module.exports = {
       new webpack.optimize.OccurenceOrderPlugin(),
       new ExtractTextPlugin('style.css')
     ];
-
+    config.externals = {
+      vue: 'Vue'
+    };
     return config;
   }
 };
