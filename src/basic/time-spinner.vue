@@ -122,18 +122,21 @@
         if (!(newVal >= 0 && newVal <= 23)) {
           this.hours = oldVal;
         }
+        this.$emit('change');
       },
 
       minutes(newVal, oldVal) {
         if (!(newVal >= 0 && newVal <= 59)) {
           this.minutes = oldVal;
         }
+        this.$emit('change');
       },
 
       seconds(newVal, oldVal) {
         if (!(newVal >= 0 && newVal <= 59)) {
           this.seconds = oldVal;
         }
+        this.$emit('change');
       }
     },
 

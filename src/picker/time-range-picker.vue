@@ -2,14 +2,20 @@
   <div class="dt-picker">
     <div style="overflow: hidden;">
       <div class="dt-picker-content timerangepicker-content">
-        <time-spinner v-ref:min-spinner :hours.sync="minHours" :minutes.sync="minMinutes" :seconds.sync="minSeconds" :show-seconds="showSeconds"></time-spinner>
+        <div class="timerangepicker-content-header">开始时间</div>
+        <time-spinner v-ref:min-spinner :show-seconds="showSeconds" @change="handleChange"
+          :hours.sync="minHours" :minutes.sync="minMinutes" :seconds.sync="minSeconds">
+        </time-spinner>
       </div>
       <div class="dt-picker-content timerangepicker-content">
-        <time-spinner v-ref:max-spinner :hours.sync="maxHours" :minutes.sync="maxMinutes" :seconds.sync="maxSeconds" :show-seconds="showSeconds"></time-spinner>
+        <div class="timerangepicker-content-header">结束时间</div>
+        <time-spinner v-ref:max-spinner :show-seconds="showSeconds" @change="handleChange"
+          :hours.sync="maxHours" :minutes.sync="maxMinutes" :seconds.sync="maxSeconds">
+        </time-spinner>
       </div>
     </div>
     <div class="dt-picker-footer">
-      <button class="dt-picker-btn" @click="handleConfirm">确定</button>
+      <button class="dt-picker-btn" @click="handleConfirm" :disabled="btnDisabled">确定</button>
     </div>
   </div>
 </template>
@@ -31,7 +37,11 @@
     width: 50%;
     box-sizing: border-box;
     margin: 0;
-    padding: 20px;
+    padding: 10px 15px;
+  }
+
+  .timerangepicker-content-header {
+    margin-bottom: 5px;
   }
 
   .timerangepicker-content:first-of-type {
@@ -40,6 +50,14 @@
 </style>
 
 <script type="text/ecmascript-6">
+
+  const isDisabled = function(minTime, maxTime) {
+    const minValue = minTime.getHours() * 3600 + minTime.getMinutes() * 60 + minTime.getSeconds();
+    const maxValue = maxTime.getHours() * 3600 + maxTime.getMinutes() * 60 + maxTime.getSeconds();
+
+    return minValue > maxValue;
+  };
+
   export default {
     components: {
       TimeSpinner: require('../basic/time-spinner.vue')
@@ -53,7 +71,9 @@
       },
       maxTime: {
         default() {
-          return new Date();
+          const date = new Date();
+          date.setHours(date.getHours() + 1);
+          return date;
         }
       },
       format: {
@@ -151,7 +171,18 @@
       }
     },
 
+    data() {
+      return {
+        btnDisabled: isDisabled(this.minTime, this.maxTime)
+      }
+    },
+
     methods: {
+      handleChange() {
+        this.btnDisabled = isDisabled(this.minTime, this.maxTime);
+      },
+
+
       handleConfirm() {
         this.$emit('pick', [this.minTime, this.maxTime]);
       },

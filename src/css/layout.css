@@ -90,3 +90,8 @@
   background-color: transparent;
   outline: none;
 }
+
+.dt-picker-btn[disabled] {
+  color: #cccccc;
+  cursor: not-allowed;
+}

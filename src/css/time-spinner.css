@@ -8,8 +8,8 @@
 .timespinner-slot,
 .timespinner-separator {
   display: inline-block;
-  height: 80px;
-  line-height: 74px;
+  height: 90px;
+  line-height: 86px;
 }
 
 .timespinner-slot {

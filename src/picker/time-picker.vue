@@ -1,7 +1,9 @@
 <template>
   <div class="dt-picker">
     <div class="dt-picker-content">
-      <time-spinner v-ref:spinner :hours.sync="hours" :minutes.sync="minutes" :seconds.sync="seconds" :show-seconds="showSeconds"></time-spinner>
+      <time-spinner v-ref:spinner :show-seconds="showSeconds"
+        :hours.sync="hours" :minutes.sync="minutes" :seconds.sync="seconds">
+      </time-spinner>
     </div>
     <div class="dt-picker-footer">
       <button class="dt-picker-btn" @click="handleConfirm">确定</button>
@@ -15,7 +17,7 @@
   }
 
   .dt-picker-content {
-    padding: 20px 0;
+    padding: 10px 0;
     text-align: center;
   }
 </style>
