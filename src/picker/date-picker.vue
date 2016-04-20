@@ -7,7 +7,7 @@
           <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
           <button @click="prevMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
           <span @click="showYearPicker" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ year }}年</span>
-          <span @click="showMonthPicker" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
+          <span @click="showMonthPicker" v-show="currentView !== 'year'" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
           <button @click="nextYear" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
           <button @click="nextMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
         </div>
@@ -176,7 +176,11 @@
 
       handleYearPick(year) {
         this.date.setFullYear(year);
-        this.currentView = 'month';
+        if (this.selectionMode === 'year') {
+          this.$emit('pick', year);
+        } else {
+          this.currentView = 'month';
+        }
 
         this.resetDate();
       },
@@ -217,7 +221,7 @@
 
     computed: {
       resetView() {
-        if (this.selectionMode !== 'month') {
+        if (this.selectionMode !== 'month' && this.selectionMode !== 'year') {
           this.currentView = 'date';
         } else {
           this.currentView = 'year';

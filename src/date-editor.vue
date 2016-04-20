@@ -33,7 +33,7 @@
     datetimerange: 'YYYY-MM-DD HH:mm:ss'
   };
 
-  const HAVE_TRIGGER_TYPES = ['date', 'datetime', 'time', 'fixed-time', 'week', 'month', 'daterange', 'timerange', 'datetimerange'];
+  const HAVE_TRIGGER_TYPES = ['date', 'datetime', 'time', 'fixed-time', 'week', 'month', 'year', 'daterange', 'timerange', 'datetimerange'];
   const RANGE_SEPARATOR = '  ~  ';
   const DATE_FORMATTER = function(value, format) {
     return formatDate(value, format);
@@ -121,9 +121,22 @@
       formatter: DATE_FORMATTER,
       parser: DATE_PARSER
     },
+    year: {
+      formatter(value) {
+        if (!value) return '';
+        return '' + value;
+      },
+      parser(text) {
+        const year = Number(text);
+        if (!isNaN(year)) return year;
+
+        return null;
+      }
+    },
     number: {
       formatter(value) {
-        return value;
+        if (!value) return '';
+        return '' + value;
       },
       parser(text) {
         let result = Number(text);
@@ -192,6 +205,8 @@
           return 'week';
         } else if (this.type === 'month') {
           return 'month';
+        } else if (this.type === 'year') {
+          return 'year';
         }
 
         return 'day';
@@ -332,6 +347,7 @@
           if (this.format) {
             this.picker.format = this.format;
           }
+          this.picker.resetView && this.picker.resetView();
           this.picker.$appendTo(this.$el);
 
           this.pickerVisible = true;

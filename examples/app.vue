@@ -36,6 +36,10 @@
   </div>
 
   <div class="block">
+    <date-editor type="year" placeholder="选择年" style="width: 240px;"></date-editor>
+  </div>
+
+  <div class="block">
     <date-editor type="daterange" placeholder="选择日期范围" style="width: 240px;"></date-editor>
   </div>
 

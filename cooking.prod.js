@@ -9,8 +9,11 @@ module.exports = {
       'index': 'src/index.js'
     };
     config.devtool = false;
+    config.output.publicPath = '';
     config.output.path = 'lib';
     config.output.filename = '[name].js';
+    config.output.library = 'ElementDatePicker';
+    config.output.libraryTarget = 'umd';
     config.plugins = [
       new webpack.DefinePlugin({
         'process.env': {
