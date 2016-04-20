@@ -31,7 +31,7 @@ module.exports = {
       new ExtractTextPlugin('style.css')
     ];
     config.externals = {
-      vue: 'Vue'
+      vue: 'vue'
     };
     return config;
   }

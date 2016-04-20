@@ -33,7 +33,7 @@
 
 .dt-picker-content {
   position: relative;
-  margin: 12px 12px 0 12px;
+  margin: 12px;
 }
 
 .dt-picker *[slot=sidebar],
@@ -89,6 +89,12 @@
   cursor: pointer;
   background-color: transparent;
   outline: none;
+}
+
+.dt-picker-btn-link {
+  color: #55a4ff;
+  text-decoration: none;
+  padding: 15px;
 }
 
 .dt-picker-btn[disabled] {

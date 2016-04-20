@@ -26,8 +26,8 @@
       </div>
     </div>
 
-    <div class="dt-picker-footer" v-show="currentView === 'date'">
-      <button class="dt-picker-btn" @click="changeToToday">{{ $t('datepicker.today') }}</button>
+    <div class="dt-picker-footer" v-show="footerVisible && currentView === 'date'">
+      <!--<a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>-->
       <button class="dt-picker-btn" @click="confirm">{{ $t('datepicker.confirm') }}</button>
     </div>
   </div>
@@ -196,6 +196,16 @@
 
       clear() {
         this.$emit('pick', { date: null });
+      },
+
+      resetView() {
+        if (this.selectionMode !== 'month' && this.selectionMode !== 'year') {
+          this.currentView = 'date';
+        } else {
+          this.currentView = 'year';
+        }
+        this.year = this.date.getFullYear();
+        this.month = this.date.getMonth();
       }
     },
 
@@ -220,14 +230,8 @@
     },
 
     computed: {
-      resetView() {
-        if (this.selectionMode !== 'month' && this.selectionMode !== 'year') {
-          this.currentView = 'date';
-        } else {
-          this.currentView = 'year';
-        }
-        this.year = this.date.getFullYear();
-        this.month = this.date.getMonth();
+      footerVisible() {
+        return this.showTime;
       },
 
       hours: {
