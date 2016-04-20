@@ -21,6 +21,7 @@
   margin-left: 100px;
 }
 
+.dt-picker-body,
 .dt-picker-body-wrapper {
   overflow: hidden;
 }

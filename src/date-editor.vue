@@ -182,7 +182,9 @@
       lazy: {
         type: Boolean,
         default: false
-      }
+      },
+
+      pickerOptions: {}
     },
 
     watch: {
@@ -348,6 +350,14 @@
             this.picker.format = this.format;
           }
           this.picker.resetView && this.picker.resetView();
+
+          const options = this.pickerOptions;
+          for (const option in options) {
+            if (options.hasOwnProperty(option)) {
+              this.picker[option] = options[option];
+            }
+          }
+
           this.picker.$appendTo(this.$el);
 
           this.pickerVisible = true;

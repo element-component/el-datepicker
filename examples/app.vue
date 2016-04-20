@@ -24,6 +24,13 @@
   </div>
 
   <div class="block">
+    <date-editor
+      type="date" placeholder="选择日期(有快捷键)"
+      :picker-options="pickerOptions1"
+      style="width: 240px;"></date-editor>
+  </div>
+
+  <div class="block">
     <date-editor type="datetime" placeholder="选择日期时间" style="width: 240px;"></date-editor>
   </div>
 
@@ -41,6 +48,14 @@
 
   <div class="block">
     <date-editor type="daterange" placeholder="选择日期范围" style="width: 240px;"></date-editor>
+  </div>
+
+  <div class="block">
+    <date-editor type="daterange"
+     :picker-options="pickerOptions2"
+     placeholder="选择日期范围, 有快捷键"
+     style="width: 240px;">
+    </date-editor>
   </div>
 
   <div class="block">
@@ -90,7 +105,56 @@
 
     data() {
       return {
-        disabledDate
+        disabledDate,
+        pickerOptions1: {
+          shortcuts: [{
+            text: '今天',
+            onClick(picker) {
+              picker.$emit('pick', new Date());
+            }
+          }, {
+            text: '昨天',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit('pick', date);
+            }
+          }, {
+            text: '一周前',
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', date);
+            }
+          }]
+        },
+        pickerOptions2: {
+          shortcuts: [{
+            text: '最近一周',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近一个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
+              picker.$emit('pick', [start, end]);
+            }
+          }, {
+            text: '最近三个月',
+            onClick(picker) {
+              const end = new Date();
+              const start = new Date();
+              start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
+              picker.$emit('pick', [start, end]);
+            }
+          }]
+        }
       };
     },
 

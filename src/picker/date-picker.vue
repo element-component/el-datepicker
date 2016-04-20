@@ -2,6 +2,9 @@
   <div class="dt-picker datepicker">
     <div class="dt-picker-body-wrapper">
       <slot name="sidebar" class="dt-picker-sidebar"></slot>
+      <div class="dt-picker-sidebar" v-if="shortcuts">
+        <button class="dt-picker-shortcut" v-for="shortcut in shortcuts" @click="handleShortcutClick(shortcut)">{{shortcut.text}}</button>
+      </div>
       <div class="dt-picker-body">
         <div class="dt-picker-header" v-show="currentView !== 'time'">
           <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
@@ -60,7 +63,9 @@
       selectionMode: {
         type: String,
         default: 'day'
-      }
+      },
+
+      shortcuts: {}
     },
 
     watch: {
@@ -139,6 +144,12 @@
 
       prevYear() {
         this.year--;
+      },
+
+      handleShortcutClick(shortcut) {
+        if (shortcut.onClick) {
+          shortcut.onClick(this);
+        }
       },
 
       handleTimePick(picker) {

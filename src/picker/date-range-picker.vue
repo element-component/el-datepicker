@@ -2,6 +2,9 @@
   <div class="dt-picker daterangepicker">
     <div class="dt-picker-body-wrapper">
       <slot name="sidebar" class="dt-picker-sidebar"></slot>
+      <div class="dt-picker-sidebar" v-if="shortcuts">
+        <button class="dt-picker-shortcut" v-for="shortcut in shortcuts" @click="handleShortcutClick(shortcut)">{{shortcut.text}}</button>
+      </div>
       <div class="dt-picker-body">
         <div class="dt-picker-content daterangepicker-content">
           <div class="daterangepicker-header">
@@ -30,13 +33,14 @@
       </div>
     </div>
     <div class="dt-picker-footer">
+      <a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>
       <button class="dt-picker-btn" @click="handleConfirm">确定</button>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import { nextMonth, prevMonth } from '../util';
+  import { nextMonth, prevMonth, $t } from '../util';
   require('../css/date-range-picker.css');
 
   export default {
@@ -61,7 +65,8 @@
       showTime: {
         type: Boolean,
         default: false
-      }
+      },
+      shortcuts: {}
     },
 
     computed: {
@@ -159,6 +164,18 @@
     },
 
     methods: {
+      $t,
+
+      changeToToday() {
+        this.date = new Date();
+      },
+
+      handleShortcutClick(shortcut) {
+        if (shortcut.onClick) {
+          shortcut.onClick(this);
+        }
+      },
+
       prevMonth() {
         this.date = prevMonth(this.date);
       },

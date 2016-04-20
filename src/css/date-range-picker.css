@@ -1,7 +1,7 @@
 @import './vars.css';
 
-.daterangepicker {
-  min-width: 600px;
+.daterangepicker .dt-picker-body {
+  min-width: 560px;
 }
 
 .daterangepicker .dt-picker-content {
@@ -11,6 +11,7 @@
 .daterangepicker table {
   table-layout: fixed;
   margin: 5px;
+  width: 100%;
 }
 
 .daterangepicker-content {
