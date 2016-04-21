@@ -2,7 +2,7 @@
   <span class="d-texteditor {{size}} {{ haveTrigger ? 'have-trigger' : '' }} {{ pickerVisible ? 'active' : '' }} {{ !!this.value ? 'filled' : '' }}">
     <editor></editor>
     <span class="d-texteditor-clear iconfont icon-cross" @click="handleClear"></span>
-    <span @click="toggleDatePicker()" class="d-texteditor-trigger iconfont icon-calendar" v-if="haveTrigger"></span>
+    <span @click="toggleDatePicker()" class="d-texteditor-trigger iconfont {{triggerClass}}" v-if="haveTrigger"></span>
   </span>
 </template>
 
@@ -198,6 +198,10 @@
     },
 
     computed: {
+      triggerClass() {
+        return this.type.indexOf('time') !== -1 ? 'icon-time' : 'icon-calendar';
+      },
+
       editable() {
         return this.type.indexOf('range') !== -1;
       },

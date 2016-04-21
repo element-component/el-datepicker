@@ -63,17 +63,7 @@
   </div>
 
   <div class="block">
-    <date-picker style="display: inline-block; width: 380px;" :disabled-date="disabledDate">
-      <div slot="sidebar">
-        <button class="dt-picker-shortcut">最近一周</button>
-        <button class="dt-picker-shortcut">最近一个月</button>
-        <button class="dt-picker-shortcut">最近三个月</button>
-      </div>
-    </date-picker>
-  </div>
-
-  <div class="block">
-    <date-range-picker style="display: inline-block;">
+    <date-range-picker style="display: inline-block;" show-time>
       <div slot="sidebar">
         <button class="dt-picker-shortcut">最近一周</button>
         <button class="dt-picker-shortcut">最近一个月</button>

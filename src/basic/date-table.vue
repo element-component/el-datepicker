@@ -23,6 +23,12 @@
   import { hasClass } from 'wind-dom';
   import Vue from 'vue';
 
+  const clearHours = function(time) {
+    const cloneDate = new Date(time);
+    cloneDate.setHours(0, 0, 0, 0, 0);
+    return cloneDate.getTime();
+  };
+
   export default {
     props: {
       date: {},
@@ -102,9 +108,9 @@
 
             const index = i * 7 + j;
             const time = startDate.getTime() + DAY_DURATION * index;
-            cell.inRange = time >= this.minDate && time <= this.maxDate;
-            cell.start = this.minDate && time === this.minDate.getTime();
-            cell.end = this.maxDate && time === this.maxDate.getTime();
+            cell.inRange = time >= clearHours(this.minDate) && time <= clearHours(this.maxDate);
+            cell.start = this.minDate && time === clearHours(this.minDate);
+            cell.end = this.maxDate && time === clearHours(this.maxDate);
 
             if (i === 0) {
               if (j >= day) {
@@ -246,9 +252,9 @@
             const index = i * 7 + j + (this.showWeekNumber ? -1 : 0);
             const time = startDate.getTime() + DAY_DURATION * index;
 
-            cell.inRange = time >= minDate && time <= maxDate;
-            cell.start = minDate && time === minDate.getTime();
-            cell.end = maxDate && time === maxDate.getTime();
+            cell.inRange = time >= clearHours(minDate) && time <= clearHours(maxDate);
+            cell.start = minDate && time === clearHours(minDate.getTime());
+            cell.end = maxDate && time === clearHours(maxDate.getTime());
           }
         }
       },

@@ -6,7 +6,24 @@
         <button class="dt-picker-shortcut" v-for="shortcut in shortcuts" @click="handleShortcutClick(shortcut)">{{shortcut.text}}</button>
       </div>
       <div class="dt-picker-body">
-        <div class="dt-picker-content daterangepicker-content">
+        <div class="daterangepicker-timeheader" v-if="showTime">
+          <span class="daterangepicker-editorswrap">
+            <input v-model="leftVisibleDate" placeholder="开始日期" class="d-texteditor-editor date" readonly/>
+            <span class="daterangepicker-timepickerwrap">
+              <input v-model="leftVisibleTime" @focus="minDate && (leftTimePickerVisible = true)" placeholder="开始时间" class="d-texteditor-editor time" :readonly="!minDate"/>
+              <time-picker :date.sync="minDate" @pick="handleLeftTimePick" v-show="leftTimePickerVisible"></time-picker>
+            </span>
+          </span>
+          <span class="iconfont icon-rightarrow"></span>
+          <span class="daterangepicker-editorswrap right">
+            <input v-model="rightVisibleDate" placeholder="结束日期" class="d-texteditor-editor date" readonly/>
+            <span class="daterangepicker-timepickerwrap">
+              <input v-model="rightVisibleTime" @focus="maxDate && (rightTimePickerVisible = true)" placeholder="结束时间" class="d-texteditor-editor time" :readonly="!maxDate"/>
+              <time-picker :date.sync="maxDate" @pick="handleRightTimePick" v-show="rightTimePickerVisible"></time-picker>
+            </span>
+          </span>
+        </div>
+        <div class="dt-picker-content daterangepicker-content daterangepicker-content__left">
           <div class="daterangepicker-header">
             <button @click="prevYear" class="dt-picker-iconbtn iconfont icon-doubleleft"></button>
             <button @click="prevMonth" class="dt-picker-iconbtn iconfont icon-left"></button>
@@ -14,9 +31,6 @@
           </div>
           <date-table selection-mode="range" :date.sync="date" :year.sync="leftYear" :month.sync="leftMonth"
             :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState"></date-table>
-          <div style="text-align: center;" v-if="showTime">
-            <time-spinner :hours.sync="leftHours" :minutes.sync="leftMinutes" :seconds.sync="leftSeconds"></time-spinner>
-          </div>
         </div>
         <div class="dt-picker-content daterangepicker-content">
           <div class="daterangepicker-header">
@@ -26,9 +40,6 @@
           </div>
           <date-table selection-mode="range" :date.sync="rightDate" :year.sync="rightYear" :month.sync="rightMonth"
             :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState"></date-table>
-          <div style="text-align: center;" v-if="showTime">
-            <time-spinner :hours.sync="rightHours" :minutes.sync="rightMinutes" :seconds.sync="rightSeconds"></time-spinner>
-          </div>
         </div>
       </div>
     </div>
@@ -40,7 +51,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { nextMonth, prevMonth, $t } from '../util';
+  import { nextMonth, prevMonth, $t, formatDate } from '../util';
   require('../css/date-range-picker.css');
 
   export default {
@@ -92,6 +103,22 @@
 
       rightMonth() {
         return this.rightDate.getMonth();
+      },
+
+      leftVisibleDate() {
+        return formatDate(this.minDate);
+      },
+
+      rightVisibleDate() {
+        return formatDate(this.maxDate);
+      },
+
+      leftVisibleTime() {
+        return formatDate(this.minDate, 'HH:mm:ss');
+      },
+
+      rightVisibleTime() {
+        return formatDate(this.maxDate, 'HH:mm:ss');
       },
 
       leftHours: {
@@ -163,6 +190,13 @@
       }
     },
 
+    data() {
+      return {
+        leftTimePickerVisible: false,
+        rightTimePickerVisible: false
+      };
+    },
+
     methods: {
       $t,
 
@@ -174,6 +208,33 @@
         if (shortcut.onClick) {
           shortcut.onClick(this);
         }
+      },
+
+      resetView() {
+        this.leftTimePickerVisible = false;
+        this.rightTimePickerVisible = false;
+      },
+
+      handleLeftTimePick(value) {
+        if (this.minDate) {
+          this.minDate.setHours(value.getHours());
+          this.minDate.setMinutes(value.getMinutes());
+          this.minDate.setSeconds(value.getSeconds());
+
+          this.minDate = new Date(this.minDate);
+        }
+        this.leftTimePickerVisible = false;
+      },
+
+      handleRightTimePick(value) {
+        if (this.maxDate) {
+          this.maxDate.setHours(value.getHours());
+          this.maxDate.setMinutes(value.getMinutes());
+          this.maxDate.setSeconds(value.getSeconds());
+
+          this.maxDate = new Date(this.maxDate);
+        }
+        this.rightTimePickerVisible = false;
       },
 
       prevMonth() {
@@ -206,7 +267,7 @@
     },
 
     components: {
-      TimeSpinner: require('../basic/time-spinner.vue'),
+      TimePicker: require('../picker/time-picker.vue'),
       DateTable: require('../basic/date-table.vue')
     }
   };

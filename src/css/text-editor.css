@@ -52,7 +52,7 @@
 }
 
 .d-texteditor.filled:hover .d-texteditor-clear,
-.d-texteditor.filled.active .d-texteditor-clear {
+.d-texteditor.filled.active > .d-texteditor-clear {
   display: inline-block;
 }
 
@@ -89,7 +89,7 @@
 }
 
 .d-texteditor-editor:focus,
-.d-texteditor.active .d-texteditor-editor {
+.d-texteditor.active > .d-texteditor-editor {
   outline: none;
   border-color: #5da9ff;
   box-shadow: 0 0 4px #2e90fe;

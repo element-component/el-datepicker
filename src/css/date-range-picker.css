@@ -22,7 +22,7 @@
   padding: 12px;
 }
 
-.daterangepicker-content:first-of-type {
+.daterangepicker-content__left {
   border-right: 1px solid var(--datepicker-inner-border-color);
 }
 
@@ -49,4 +49,53 @@
 .daterangepicker-content:last-of-type .daterangepicker-header div {
   margin-left: 50px;
   margin-right: 50px;
+}
+
+.daterangepicker-timeheader {
+  position: relative;
+  border-bottom: 1px solid var(--datepicker-inner-border-color);
+  font-size: 0;
+  padding: 8px 5px 5px 5px;
+}
+
+.daterangepicker-editorswrap {
+  padding-right: 10px;
+  display: inline-block;
+  width: 50%;
+  box-sizing: border-box;
+}
+
+.daterangepicker-editorswrap.right {
+  padding-left: 10px;
+  text-align: right;
+}
+
+.daterangepicker-editorswrap input.date {
+  width: 45%;
+}
+
+.daterangepicker-editorswrap input.time {
+  margin-left: 5px;
+  width: 45%;
+}
+
+.daterangepicker-timeheader > .icon-rightarrow {
+  position: absolute;
+  left: 50%;
+  margin-left: -10px;
+  margin-top: 5px;
+  font-size: 20px;
+  color: var(--datepicker-icon-color);
+}
+
+.daterangepicker-timepickerwrap {
+  position: relative;
+}
+
+.daterangepicker-timepickerwrap .dt-picker {
+  position: absolute;
+  top: 13px;
+  right: 0;
+  z-index: 1;
+  background: #fff;
 }
