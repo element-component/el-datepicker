@@ -6,6 +6,7 @@
   border: 1px solid var(--datepicker-border-color);
   box-shadow: 0 2px 6px #ccc;
   background: #fff;
+  border-radius: 2px;
   line-height: 20px;
   overflow: hidden;
 }

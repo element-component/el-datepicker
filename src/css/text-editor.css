@@ -4,7 +4,7 @@
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  height: 28px;
+  height: 30px;
 }
 
 .d-texteditor.have-trigger .d-texteditor-editor {
@@ -60,7 +60,7 @@
   border: 1px solid #e5e6e7;
   border-radius: 2px;
   line-height: 18px;
-  padding: 4px;
+  padding: 5px;
   width: 100%;
   box-sizing: border-box;
   transition: border 0.3s;
@@ -105,7 +105,7 @@
 
 .d-texteditor .datepicker {
   position: absolute;
-  top: 30px;
+  top: 35px;
   left: 0;
   z-index: 1;
 }
@@ -115,4 +115,17 @@
   top: 30px;
   left: 0;
   z-index: 1;
+}
+
+.d-texteditor .dt-picker {
+  position: absolute;
+  box-shadow: 0 2px 6px #ccc;
+  background: #fff;
+  z-index: 10;
+  top: 35px;
+}
+
+.d-texteditor .d-texteditor-trigger {
+  font-size: 13px;
+  line-height: 30px;
 }

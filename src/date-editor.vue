@@ -6,16 +6,6 @@
   </span>
 </template>
 
-<style>
-  .d-texteditor .dt-picker {
-    position: absolute;
-    box-shadow: 0 2px 6px #ccc;
-    background: #fff;
-    z-index: 10;
-    top: 30px;
-  }
-</style>
-
 <script type="text/ecmascript-6">
   import Vue from 'vue';
   import { merge, formatDate, parseDate, getWeekNumber } from './util';

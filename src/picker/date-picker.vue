@@ -7,11 +7,11 @@
       </div>
       <div class="dt-picker-body">
         <div class="dt-picker-header" v-show="currentView !== 'time'">
-          <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
+          <button @click="prevYear" v-show="currentView !== 'year'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
           <button @click="prevMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
-          <span @click="showYearPicker" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ yearLabel }}</span>
+          <span @click="showYearPicker" class="datepicker-header-label">{{ yearLabel }}</span>
           <span @click="showMonthPicker" v-show="currentView === 'date'" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
-          <button @click="nextYear" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
+          <button @click="nextYear" v-show="currentView !== 'year'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
           <button @click="nextMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
         </div>
 
