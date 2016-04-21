@@ -106,6 +106,10 @@
   color: var(--datepicker-off-color);
 }
 
+.datetable td.today {
+  color: var(--datepicker-text-hover-color);
+}
+
 .datetable td.available:hover {
   background-color: var(--datepicker-cell-hover-color);
 }

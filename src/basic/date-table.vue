@@ -185,6 +185,9 @@
         let classes = [];
         if ((cell.type === 'normal' || cell.type === 'today') && !cell.disabled) {
           classes.push('available');
+          if (cell.type === 'today') {
+            classes.push('today');
+          }
         } else {
           classes.push(cell.type);
         }
