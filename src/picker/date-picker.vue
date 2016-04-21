@@ -9,15 +9,16 @@
         <div class="dt-picker-header" v-show="currentView !== 'time'">
           <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
           <button @click="prevMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
-          <span @click="showYearPicker" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ year }}年</span>
-          <span @click="showMonthPicker" v-show="currentView !== 'year'" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
+          <span @click="showYearPicker" class="datepicker-header-label" :class="{ active: currentView === 'year' }">{{ yearLabel }}</span>
+          <span @click="showMonthPicker" v-show="currentView === 'date'" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
           <button @click="nextYear" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
           <button @click="nextMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
         </div>
 
         <div class="dt-picker-content">
           <date-table v-show="currentView === 'date'" @pick="handleDatePick" :class="{ weekmode: selectionMode === 'week' }"
-            :year.sync="year" :month.sync="month" :date.sync="date" :value.sync="value" :selection-mode="selectionMode" :disabled-date="disabledDate">
+            :year.sync="year" :month.sync="month" :date.sync="date" :value.sync="value"
+            :selection-mode="selectionMode" :disabled-date="disabledDate">
           </date-table>
           <year-table :year.sync="year" v-show="currentView === 'year'" @pick="handleYearPick"></year-table>
           <month-table :month.sync="month" v-show="currentView === 'month'" @pick="handleMonthPick" ></month-table>
@@ -30,7 +31,7 @@
     </div>
 
     <div class="dt-picker-footer" v-show="footerVisible && currentView === 'date'">
-      <!--<a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>-->
+      <a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>
       <button class="dt-picker-btn" @click="confirm">{{ $t('datepicker.confirm') }}</button>
     </div>
   </div>
@@ -69,10 +70,18 @@
     },
 
     watch: {
+      value(newVal) {
+        if (this.selectionMode === 'day' && newVal instanceof Date) {
+          this.date = newVal;
+          this.year = newVal.getFullYear();
+          this.month = newVal.getMonth();
+        }
+      },
+
       selectionMode(newVal) {
         if (newVal === 'month') {
           if (this.currentView !== 'year' || this.currentView !== 'month') {
-            this.currentView = 'year';
+            this.currentView = 'month';
           }
         }
       },
@@ -176,8 +185,12 @@
 
       handleDatePick(value) {
         if (this.selectionMode === 'day') {
-          this.$emit('pick', new Date(value.getTime()));
-          this.date = value;
+          if (!this.showTime) {
+            this.$emit('pick', new Date(value.getTime()));
+          }
+          this.date.setFullYear(value.getFullYear());
+          this.date.setMonth(value.getMonth());
+          this.date.setDate(value.getDate());
         } else if (this.selectionMode === 'week') {
           this.$emit('pick', value.value);
         }
@@ -198,6 +211,7 @@
 
       changeToToday() {
         this.date.setTime(+new Date());
+        this.$emit('pick', new Date(this.date.getTime()));
         this.resetDate();
       },
 
@@ -210,10 +224,12 @@
       },
 
       resetView() {
-        if (this.selectionMode !== 'month' && this.selectionMode !== 'year') {
-          this.currentView = 'date';
-        } else {
+        if (this.selectionMode === 'month') {
+          this.currentView = 'month';
+        } else if (this.selectionMode === 'year') {
           this.currentView = 'year';
+        } else {
+          this.currentView = 'date';
         }
         this.year = this.date.getFullYear();
         this.month = this.date.getMonth();
@@ -243,6 +259,16 @@
     computed: {
       footerVisible() {
         return this.showTime;
+      },
+
+      yearLabel() {
+        const year = this.year;
+        if (!year) return '';
+        if (this.currentView === 'year') {
+          const startYear = Math.floor(year / 10) * 10;
+          return startYear + '年' + '-' + (startYear + 9) + '年';
+        }
+        return this.year + '年';
       },
 
       hours: {

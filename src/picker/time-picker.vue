@@ -29,9 +29,24 @@
     },
 
     props: {
-      date: {},
+      date: {
+        default() {
+          return new Date();
+        }
+      },
       format: {
         default: 'HH:mm:ss'
+      },
+      value: {}
+    },
+
+    watch: {
+      value(newVal) {
+        if (newVal instanceof Date) {
+          this.date = newVal;
+        } else if (!newVal) {
+          this.date = new Date();
+        }
       }
     },
 

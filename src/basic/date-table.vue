@@ -12,7 +12,7 @@
       <th>{{ $t('datepicker.weeks.sat') }}</th>
     </tr>
     <tr v-for="row in rows" class="datetable-row" :class="{ current: value && isWeekActive(row[1]) }">
-      <td v-for="cell in row" class="{{ getCellClasses(cell) }}">{{ cell.text }}</td>
+      <td v-for="cell in row" class="{{ getCellClasses(cell) }}">{{ cell.type === 'today' ? '今天' : cell.text }}</td>
     </tr>
     </tbody>
   </table>
@@ -25,7 +25,7 @@
 
   const clearHours = function(time) {
     const cloneDate = new Date(time);
-    cloneDate.setHours(0, 0, 0, 0, 0);
+    cloneDate.setHours(0, 0, 0, 0);
     return cloneDate.getTime();
   };
 
@@ -88,6 +88,7 @@
 
         const startDate = this.startDate;
         const disabledDate = this.disabledDate;
+        const now = clearHours(new Date());
 
         for (var i = 0; i < 6; i++) {
           const row = rows[i];
@@ -111,6 +112,7 @@
             cell.inRange = time >= clearHours(this.minDate) && time <= clearHours(this.maxDate);
             cell.start = this.minDate && time === clearHours(this.minDate);
             cell.end = this.maxDate && time === clearHours(this.maxDate);
+            const isToday = time === now;
 
             if (i === 0) {
               if (j >= day) {
@@ -134,9 +136,24 @@
               }
             }
 
+            if (isToday) {
+              cell.type = 'today';
+            }
+
             cell.disabled = typeof disabledDate === 'function' && disabledDate(new Date(time));
 
             Vue.set(row, this.showWeekNumber ? j + 1 : j, cell);
+          }
+
+          if (this.selectionMode === 'week') {
+            const start = this.showWeekNumber ? 1 : 0;
+            const end = this.showWeekNumber ?  7 : 6;
+            const isWeekActive = this.isWeekActive(row[start + 1]);
+
+            row[start].inRange = isWeekActive;
+            row[start].start = isWeekActive;
+            row[end].inRange = isWeekActive;
+            row[end].end = isWeekActive;
           }
         }
 
@@ -166,17 +183,18 @@
         const monthDate = this.monthDate;
 
         let classes = [];
-        if (cell.type === 'normal' && !cell.disabled) {
+        if ((cell.type === 'normal' || cell.type === 'today') && !cell.disabled) {
           classes.push('available');
         } else {
           classes.push(cell.type);
         }
 
-        if (selectionMode === 'day' && cell.type === 'normal' && this.year === this.date.getFullYear() && this.month === this.date.getMonth() && monthDate == cell.text) {
+        if (selectionMode === 'day' && (cell.type === 'normal' || cell.type === 'today') &&
+          this.year === this.date.getFullYear() && this.month === this.date.getMonth() && monthDate === Number(cell.text)) {
           classes.push('current');
         }
 
-        if (cell.inRange && cell.type === 'normal') {
+        if (cell.inRange && ((cell.type === 'normal' || cell.type === 'today') || this.selectionMode === 'week')) {
           classes.push('inrange');
 
           if (cell.start) {
@@ -217,8 +235,8 @@
       isWeekActive(cell) {
         if (this.selectionMode !== 'week') return false;
         const newDate = new Date(this.year, this.month, 1);
-        const month = newDate.getMonth();
         const year = newDate.getFullYear();
+        const month = newDate.getMonth();
 
         if (cell.type === 'prevmonth') {
           newDate.setMonth(month === 0 ? 11 : month - 1);
@@ -290,10 +308,17 @@
 
         let year = this.year;
         let month = this.month;
-        const text = target.textContent || target.innerText;
+
+        const cellIndex = target.cellIndex;
+        const rowIndex = target.parentNode.rowIndex;
+
+        const cell = this.rows[rowIndex - 1][cellIndex];
+        const text = cell.text;
         const className = target.className;
 
         const newDate = new Date(this.year, this.month, 1);
+
+        const clickNormalCell = className.indexOf('prev') === -1 && className.indexOf('next') === -1;
 
         if (className.indexOf('prev') !== -1) {
           if (month === 0) {
@@ -317,21 +342,25 @@
 
         newDate.setDate(parseInt(text, 10));
 
-        if (this.selectionMode === 'range') {
+        if (clickNormalCell && this.selectionMode === 'range') {
           if (this.minDate && this.maxDate) {
             this.minDate = new Date(newDate.getTime());
             this.maxDate = null;
             this.rangeState.selecting = true;
+            this.markRange(this.minDate);
           } else if (this.minDate && !this.maxDate) {
             if (newDate >= this.minDate) {
               this.maxDate = new Date(newDate.getTime());
               this.rangeState.selecting = false;
+
+              this.$emit('pick');
             } else {
               this.minDate = new Date(newDate.getTime());
             }
           } else if (!this.minDate) {
             this.minDate = new Date(newDate.getTime());
             this.rangeState.selecting = true;
+            this.markRange(this.minDate);
           }
         }
 

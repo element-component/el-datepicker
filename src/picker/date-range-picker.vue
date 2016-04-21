@@ -30,7 +30,7 @@
             <div>{{ leftLabel }}</div>
           </div>
           <date-table selection-mode="range" :date.sync="date" :year.sync="leftYear" :month.sync="leftMonth"
-            :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState"></date-table>
+            :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState" @pick="handleRangePick"></date-table>
         </div>
         <div class="dt-picker-content daterangepicker-content">
           <div class="daterangepicker-header">
@@ -39,11 +39,11 @@
             <div>{{ rightLabel }}</div>
           </div>
           <date-table selection-mode="range" :date.sync="rightDate" :year.sync="rightYear" :month.sync="rightMonth"
-            :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState"></date-table>
+            :min-date.sync="minDate" :max-date.sync="maxDate" :range-state.sync="rangeState" @pick="handleRangePick"></date-table>
         </div>
       </div>
     </div>
-    <div class="dt-picker-footer">
+    <div class="dt-picker-footer" v-if="showTime">
       <a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>
       <button class="dt-picker-btn" @click="handleConfirm">确定</button>
     </div>
@@ -77,7 +77,8 @@
         type: Boolean,
         default: false
       },
-      shortcuts: {}
+      shortcuts: {},
+      value: {}
     },
 
     computed: {
@@ -197,8 +198,26 @@
       };
     },
 
+    watch: {
+      value(newVal) {
+        if (!newVal) {
+          this.minDate = null;
+          this.maxDate = null;
+        } else if (Array.isArray(newVal)) {
+          this.minDate = newVal[0];
+          this.maxDate = newVal[1];
+        }
+      }
+    },
+
     methods: {
       $t,
+
+      handleRangePick() {
+        if (!this.showTime) {
+          this.$emit('pick', [this.minDate, this.maxDate]);
+        }
+      },
 
       changeToToday() {
         this.date = new Date();

@@ -16,12 +16,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 .icon-rightarrow:before { content: "\e600"; }
-.icon-right:before { content: "\e601"; }
 .icon-up:before { content: "\e602"; }
 .icon-cross:before { content: "\e603"; }
-.icon-calendar:before { content: "\e604"; }
-.icon-left:before { content: "\e605"; }
-.icon-time:before { content: "\e606"; }
-.icon-doubleleft:before { content: "\e607"; }
 .icon-down:before { content: "\e608"; }
+.icon-calendar:before { content: "\e601"; }
+.icon-time:before { content: "\e604"; }
+.icon-left:before { content: "\e605"; }
+.icon-doubleleft:before { content: "\e606"; }
+.icon-right:before { content: "\e607"; }
 .icon-doubleright:before { content: "\e609"; }

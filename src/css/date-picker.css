@@ -5,6 +5,10 @@
   min-width: 300px;
 }
 
+.datepicker .dt-picker-content {
+  min-width: 260px;
+}
+
 .datepicker .iconfont {
   font-size: 12px;
 }
@@ -37,6 +41,10 @@
 
 .datepicker-nextbtn {
   float: right;
+}
+
+.yeartable .iconfont {
+  color: var(--datepicker-icon-color);
 }
 
 .yeartable td,

@@ -1,20 +1,20 @@
 <template>
   <span class="timespinner">
     <span class="timespinner-slot">
-      <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('hours')"></span>
-      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('hours', '+')"></span>
+      <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('hours', '+')"></span>
+      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('hours')"></span>
       <input v-el:hours-editor class="timespinner-editor" lazy number v-model="hours" @keydown="handleKeydown('hours', $event)"/>
     </span>
     <span class="timespinner-separator">:</span>
     <span class="timespinner-slot">
-      <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('minutes')"></span>
-      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('minutes', '+')"></span>
+      <span class="timespinner-slot-arrow iconfont icon-up" v-repeat-click="handleClick('minutes', '+')"></span>
+      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('minutes')"></span>
       <input v-el:minutes-editor class="timespinner-editor" lazy number v-model="minutes" @keydown="handleKeydown('minutes', $event)" />
     </span>
     <span class="timespinner-separator" v-if="showSeconds">:</span>
     <span class="timespinner-slot" v-if="showSeconds">
-      <span class="timespinner-slot-arrow  iconfont icon-up" v-repeat-click="handleClick('seconds')"></span>
-      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('seconds', '+')"></span>
+      <span class="timespinner-slot-arrow  iconfont icon-up" v-repeat-click="handleClick('seconds', '+')"></span>
+      <span class="timespinner-slot-arrow bottom iconfont icon-down" v-repeat-click="handleClick('seconds')"></span>
       <input v-el:seconds-editor class="timespinner-editor" lazy number v-model="seconds" @keydown="handleKeydown('seconds', $event)" />
     </span>
   </span>

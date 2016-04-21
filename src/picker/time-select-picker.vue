@@ -39,7 +39,6 @@
 
 <script type="text/ecmascript-6">
   const parseTime = function(time) {
-    if (typeof time !== 'string') debugger;
     const values = ('' || time).split(':');
     if (values.length >= 2) {
       const hours = parseInt(values[0], 10);

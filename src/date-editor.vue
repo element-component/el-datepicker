@@ -12,6 +12,7 @@
     box-shadow: 0 2px 6px #ccc;
     background: #fff;
     z-index: 10;
+    top: 30px;
   }
 </style>
 
@@ -203,7 +204,7 @@
       },
 
       editable() {
-        return this.type.indexOf('range') !== -1;
+        return this.type.indexOf('range') === -1;
       },
 
       selectionMode() {
@@ -266,9 +267,9 @@
           var type = parent.type;
           var lazy = parent.lazy;
           if (type === 'number' && HAVE_TRIGGER_TYPES.indexOf(type) !== -1) {
-            this.$options.template = `<input class="d-texteditor-editor" @focus="$parent.handleFocus" @blur="$parent.handleBlur" @keydown="$parent.handleKeydown($event)" lazy @change="$parent.handleChange($event)" type="${parent.editorType}" v-model="$parent.visualValue" placeholder="{{$parent.placeholder}}" readonly="{{$parent.readonly}}" :style="{ height: $parent.height ? $parent.height + 'px' : '' }"/>`;
+            this.$options.template = `<input class="d-texteditor-editor" @focus="$parent.handleFocus" @blur="$parent.handleBlur" @keydown="$parent.handleKeydown($event)" @keyup="$parent.handleKeyup($event)" lazy @change="$parent.handleChange($event)" type="${parent.editorType}" v-model="$parent.visualValue" placeholder="{{$parent.placeholder}}" readonly="{{$parent.readonly}}" :style="{ height: $parent.height ? $parent.height + 'px' : '' }"/>`;
           } else {
-            this.$options.template = `<input class="d-texteditor-editor" @focus="$parent.handleFocus" @blur="$parent.handleBlur" @keydown="$parent.handleKeydown($event)" ${lazy ? 'lazy' : ''} type="${parent.editorType}" v-model="$parent.visualValue" placeholder="{{$parent.placeholder}}" :style="{ height: $parent.height ? $parent.height + 'px' : '' }" readonly="{{$parent.readonly}}" />`;
+            this.$options.template = `<input class="d-texteditor-editor" @focus="$parent.handleFocus" @blur="$parent.handleBlur" @keydown="$parent.handleKeydown($event)" @keyup="$parent.handleKeyup($event)" ${lazy ? 'lazy' : ''} type="${parent.editorType}" v-model="$parent.visualValue" placeholder="{{$parent.placeholder}}" :style="{ height: $parent.height ? $parent.height + 'px' : '' }" readonly="{{$parent.readonly}}" />`;
           }
         }
       }
@@ -277,6 +278,9 @@
     methods: {
       handleClear() {
         this.value = null;
+        if (this.picker) {
+          this.picker.value = null;
+        }
       },
 
       handleChange(event) {
@@ -305,6 +309,19 @@
 
         if (keyCode === 27) {
           this.pickerVisible = false;
+        }
+      },
+
+      handleKeyup(event) {
+        if (this.picker && this.pickerVisible) {
+          const value = event.target.value;
+          const type = this.type;
+          const parser = (TYPE_VALUE_RESOLVER_MAP[type] || TYPE_VALUE_RESOLVER_MAP['default']).parser;
+          const parsedValue = parser(value, this.format || DEFAULT_FORMATS[type]);
+
+          if (parsedValue) {
+            this.picker.value = parsedValue;
+          }
         }
       },
 
@@ -353,7 +370,6 @@
           if (this.format) {
             this.picker.format = this.format;
           }
-          this.picker.resetView && this.picker.resetView();
 
           const options = this.pickerOptions;
           for (const option in options) {
@@ -363,8 +379,8 @@
           }
 
           this.picker.$appendTo(this.$el);
-
           this.pickerVisible = true;
+          this.picker.resetView && this.picker.resetView();
 
           this.picker.$on('pick', (date) => {
             this.value = date;
