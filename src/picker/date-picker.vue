@@ -7,11 +7,11 @@
       </div>
       <div class="dt-picker-body">
         <div class="dt-picker-header" v-show="currentView !== 'time'">
-          <button @click="prevYear" v-show="currentView !== 'year'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
+          <button @click="prevYear" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-doubleleft"></button>
           <button @click="prevMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-prevbtn iconfont icon-left"></button>
           <span @click="showYearPicker" class="datepicker-header-label">{{ yearLabel }}</span>
           <span @click="showMonthPicker" v-show="currentView === 'date'" class="datepicker-header-label" :class="{ active: currentView === 'month' }">{{ month + 1 }}月</span>
-          <button @click="nextYear" v-show="currentView !== 'year'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
+          <button @click="nextYear" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-doubleright"></button>
           <button @click="nextMonth" v-show="currentView === 'date'" class="dt-picker-iconbtn datepicker-nextbtn iconfont icon-right"></button>
         </div>
 
@@ -20,7 +20,7 @@
             :year.sync="year" :month.sync="month" :date.sync="date" :value.sync="value"
             :selection-mode="selectionMode" :disabled-date="disabledDate">
           </date-table>
-          <year-table :year.sync="year" v-show="currentView === 'year'" @pick="handleYearPick"></year-table>
+          <year-table v-ref:year-table :year.sync="year" v-show="currentView === 'year'" @pick="handleYearPick"></year-table>
           <month-table :month.sync="month" v-show="currentView === 'month'" @pick="handleMonthPick" ></month-table>
 
           <div class="datepicker-timewrap" style="text-align: center;" v-if="showTime" v-show="currentView === 'date'">
@@ -148,11 +148,19 @@
       },
 
       nextYear() {
-        this.year++;
+        if (this.currentView === 'year') {
+          this.$refs.yearTable.nextTenYear();
+        } else {
+          this.year++;
+        }
       },
 
       prevYear() {
-        this.year--;
+        if (this.currentView === 'year') {
+          this.$refs.yearTable.prevTenYear();
+        } else {
+          this.year--;
+        }
       },
 
       handleShortcutClick(shortcut) {

@@ -2,24 +2,24 @@
   <table @click="handleYearTableClick" class="yeartable">
     <tbody>
     <tr>
-      <td @click="prevTenYear" class="iconfont icon-left"></td>
-      <td :class="{ current: year === startYear }">{{ startYear }}</td>
-      <td :class="{ current: year === startYear + 1 }">{{ startYear + 1 }}</td>
+      <td></td>
+      <td class="available" :class="{ current: year === startYear }">{{ startYear }}</td>
+      <td class="available" :class="{ current: year === startYear + 1 }">{{ startYear + 1 }}</td>
     </tr>
     <tr>
-      <td :class="{ current: year === startYear + 2 }">{{ startYear + 2 }}</td>
-      <td :class="{ current: year === startYear + 3 }">{{ startYear + 3 }}</td>
-      <td :class="{ current: year === startYear + 4 }">{{ startYear + 4 }}</td>
+      <td class="available" :class="{ current: year === startYear + 2 }">{{ startYear + 2 }}</td>
+      <td class="available" :class="{ current: year === startYear + 3 }">{{ startYear + 3 }}</td>
+      <td class="available" :class="{ current: year === startYear + 4 }">{{ startYear + 4 }}</td>
     </tr>
     <tr>
-      <td :class="{ current: year === startYear + 5 }">{{ startYear + 5 }}</td>
-      <td :class="{ current: year === startYear + 6 }">{{ startYear + 6 }}</td>
-      <td :class="{ current: year === startYear + 7 }">{{ startYear + 7 }}</td>
+      <td class="available" :class="{ current: year === startYear + 5 }">{{ startYear + 5 }}</td>
+      <td class="available" :class="{ current: year === startYear + 6 }">{{ startYear + 6 }}</td>
+      <td class="available" :class="{ current: year === startYear + 7 }">{{ startYear + 7 }}</td>
     </tr>
     <tr>
-      <td :class="{ current: year === startYear + 8 }">{{ startYear + 8 }}</td>
-      <td :class="{ current: year === startYear + 9 }">{{ startYear + 9 }}</td>
-      <td @click="nextTenYear" class="iconfont icon-right"></td>
+      <td class="available" :class="{ current: year === startYear + 8 }">{{ startYear + 8 }}</td>
+      <td class="available" :class="{ current: year === startYear + 9 }">{{ startYear + 9 }}</td>
+      <td></td>
     </tr>
     </tbody>
   </table>

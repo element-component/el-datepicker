@@ -55,7 +55,7 @@
   cursor: pointer;
 }
 
-.yeartable td:hover,
+.yeartable td.available:hover,
 .monthtable td:hover {
   background-color: var(--datepicker-cell-hover-color);
 }
