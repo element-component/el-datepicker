@@ -23,12 +23,8 @@
   right: 0;
   top: 0;
   bottom: 0;
-  line-height: 28px;
+  line-height: 31px;
   color: var(--datepicker-icon-color);
-
-  &:hover {
-    color: var(--datepicker-text-hover-color);
-  }
 }
 
 .d-texteditor-clear {
@@ -39,16 +35,16 @@
   right: 0;
   top: 0;
   bottom: 0;
-  line-height: 28px;
+  line-height: 31px;
   color: var(--datepicker-icon-color);
+}
 
-  &:hover {
-    color: var(--datepicker-text-hover-color);
-  }
+.d-texteditor-clear:hover {
+  color: var(--datepicker-text-hover-color);
 }
 
 .d-texteditor.have-trigger .d-texteditor-clear {
-  right: 20px;
+  right: 22px;
 }
 
 .d-texteditor.filled:hover .d-texteditor-clear,
@@ -89,6 +85,7 @@
 }
 
 .d-texteditor-editor:focus,
+.d-texteditor:hover > .d-texteditor-editor,
 .d-texteditor.active > .d-texteditor-editor {
   outline: none;
   border-color: #5da9ff;

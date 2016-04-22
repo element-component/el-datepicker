@@ -1,8 +1,7 @@
 <template>
   <div class="dt-picker time-select">
     <div class="dt-picker-content">
-      <div
-        class="time-select-item"
+      <div class="time-select-item"
         v-for="item in items"
         :class="{ selected: value === item }"
         @click="handleClick(item)">

@@ -2,7 +2,7 @@
   <span class="d-texteditor {{size}} {{ haveTrigger ? 'have-trigger' : '' }} {{ pickerVisible ? 'active' : '' }} {{ !!this.value ? 'filled' : '' }}">
     <editor></editor>
     <span class="d-texteditor-clear iconfont icon-cross" @click="handleClear"></span>
-    <span @click="toggleDatePicker()" class="d-texteditor-trigger iconfont {{triggerClass}}" v-if="haveTrigger"></span>
+    <span @click="togglePicker()" class="d-texteditor-trigger iconfont {{triggerClass}}" v-if="haveTrigger"></span>
   </span>
 </template>
 
@@ -175,7 +175,9 @@
         default: false
       },
 
-      pickerOptions: {}
+      pickerOptions: {},
+
+      showTrigger: {}
     },
 
     watch: {
@@ -210,6 +212,9 @@
       },
 
       haveTrigger() {
+        if (typeof this.showTrigger !== 'undefined') {
+          return this.showTrigger;
+        }
         return HAVE_TRIGGER_TYPES.indexOf(this.type) !== -1;
       },
 
@@ -274,14 +279,14 @@
       },
 
       handleChange(event) {
-        // this.hideDatePicker();
+        // this.hidePicker();
       },
 
       handleFocus() {
         const type = this.type;
         if (HAVE_TRIGGER_TYPES.indexOf(type) !== -1) {
           if (!this.pickerVisible) {
-            this.showDatePicker();
+            this.showPicker();
           }
         }
         this.$emit('focus', this);
@@ -316,18 +321,18 @@
       },
 
       onDocumentClick() {
-        this.hideDatePicker();
+        this.hidePicker();
       },
 
-      toggleDatePicker() {
+      togglePicker() {
         if (!this.pickerVisible) {
-          this.showDatePicker();
+          this.showPicker();
         } else {
-          this.hideDatePicker();
+          this.hidePicker();
         }
       },
 
-      hideDatePicker() {
+      hidePicker() {
         if (this.picker) {
           this.picker.resetView && this.picker.resetView();
           this.picker.$el.style.display = 'none';
@@ -350,7 +355,7 @@
         }
       },
 
-      showDatePicker() {
+      showPicker() {
         const Picker = this.getPickerClass();
 
         if (!this.picker) {

@@ -166,6 +166,26 @@
     watch: {
       'rangeState.endDate'(newVal) {
         this.markRange(newVal);
+      },
+
+      minDate(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          this.rangeState.selecting = true;
+          this.markRange(newVal);
+        } else if (!newVal) {
+          this.rangeState.selecting = false;
+          this.markRange(newVal);
+        } else {
+          this.markRange();
+        }
+      },
+
+      maxDate(newVal, oldVal) {
+        if (newVal && !oldVal) {
+          this.rangeState.selecting = false;
+          this.markRange(newVal);
+          this.$emit('pick');
+        }
       }
     },
 
@@ -273,7 +293,7 @@
             const index = i * 7 + j + (this.showWeekNumber ? -1 : 0);
             const time = startDate.getTime() + DAY_DURATION * index;
 
-            cell.inRange = time >= clearHours(minDate) && time <= clearHours(maxDate);
+            cell.inRange = minDate && time >= clearHours(minDate) && time <= clearHours(maxDate);
             cell.start = minDate && time === clearHours(minDate.getTime());
             cell.end = maxDate && time === clearHours(maxDate.getTime());
           }
@@ -364,6 +384,14 @@
             this.minDate = new Date(newDate.getTime());
             this.rangeState.selecting = true;
             this.markRange(this.minDate);
+          } else if (!this.minDate && this.maxDate) {
+            // TODO 现在走不到这里
+            if (newDate <= this.maxDate) {
+              this.minDate = new Date(newDate.getTime());
+              this.rangeState.selecting = false;
+
+              this.$emit('pick');
+            }
           }
         }
 

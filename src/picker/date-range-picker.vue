@@ -8,17 +8,21 @@
       <div class="dt-picker-body">
         <div class="daterangepicker-timeheader" v-if="showTime">
           <span class="daterangepicker-editorswrap">
-            <input v-model="leftVisibleDate" placeholder="开始日期" class="d-texteditor-editor date" readonly/>
+            <input v-model="leftVisibleDate" placeholder="开始日期" class="d-texteditor-editor date" @input="handleDateInput($event, 'min')"
+              @input="handleDateInput($event, 'max')" @change="handleDateChange($event, 'min')"/>
             <span class="daterangepicker-timepickerwrap">
-              <input v-model="leftVisibleTime" @focus="minDate && (leftTimePickerVisible = true)" placeholder="开始时间" class="d-texteditor-editor time" :readonly="!minDate"/>
+              <input v-model="leftVisibleTime" @focus="leftTimePickerVisible = true" placeholder="开始时间" class="d-texteditor-editor time"
+                @change="handleTimeChange($event, 'min')"/>
               <time-picker :date.sync="minDate" @pick="handleLeftTimePick" v-show="leftTimePickerVisible"></time-picker>
             </span>
           </span>
           <span class="iconfont icon-rightarrow"></span>
           <span class="daterangepicker-editorswrap right">
-            <input v-model="rightVisibleDate" placeholder="结束日期" class="d-texteditor-editor date" readonly/>
+            <input v-model="rightVisibleDate" placeholder="结束日期" class="d-texteditor-editor date" :readonly="!minDate"
+              @input="handleDateInput($event, 'max')" @change="handleDateChange($event, 'max')"/>
             <span class="daterangepicker-timepickerwrap">
-              <input v-model="rightVisibleTime" @focus="maxDate && (rightTimePickerVisible = true)" placeholder="结束时间" class="d-texteditor-editor time" :readonly="!maxDate"/>
+              <input v-model="rightVisibleTime" @focus="minDate && (rightTimePickerVisible = true)" placeholder="结束时间" class="d-texteditor-editor time"
+               :readonly="!minDate" @change="handleTimeChange($event, 'max')"/>
               <time-picker :date.sync="maxDate" @pick="handleRightTimePick" v-show="rightTimePickerVisible"></time-picker>
             </span>
           </span>
@@ -45,13 +49,14 @@
     </div>
     <div class="dt-picker-footer" v-if="showTime">
       <a href="JavaScript:" class="dt-picker-btn-link" @click="changeToToday">{{ $t('datepicker.today') }}</a>
-      <button class="dt-picker-btn" @click="handleConfirm">确定</button>
+      <button class="dt-picker-btn" @click="handleConfirm" :disabled="btnDisabled">确定</button>
     </div>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
-  import { nextMonth, prevMonth, $t, formatDate } from '../util';
+  import Vue from 'vue';
+  import { nextMonth, prevMonth, $t, formatDate, parseDate } from '../util';
   require('../css/date-range-picker.css');
 
   export default {
@@ -82,6 +87,10 @@
     },
 
     computed: {
+      btnDisabled() {
+        return !(this.minDate && this.maxDate && !this.selecting);
+      },
+
       leftLabel() {
         return this.date.getFullYear() + '年 ' + (this.date.getMonth() + 1) + '月';
       },
@@ -199,6 +208,17 @@
     },
 
     watch: {
+      minDate() {
+        Vue.nextTick(() => {
+          if (this.maxDate && this.maxDate < this.minDate) {
+            this.maxDate = null;
+          }
+        });
+      },
+
+      maxDate() {
+      },
+
       value(newVal) {
         if (!newVal) {
           this.minDate = null;
@@ -212,6 +232,66 @@
 
     methods: {
       $t,
+
+      handleDateInput(event, type) {
+        const value = event.target.value;
+        const parsedValue = parseDate(value, 'YYYY-MM-DD');
+        if (parsedValue) {
+          const target = new Date(type === 'min' ? this.minDate : this.maxDate);
+          if (target) {
+            target.setFullYear(parsedValue.getFullYear());
+            target.setMonth(parsedValue.getMonth());
+            target.setDate(parsedValue.getDate());
+          }
+        }
+      },
+
+      handleDateChange(event, type) {
+        const value = event.target.value;
+        const parsedValue = parseDate(value, 'YYYY-MM-DD');
+        if (parsedValue) {
+          const target = new Date(type === 'min' ? this.minDate : this.maxDate);
+          if (target) {
+            target.setFullYear(parsedValue.getFullYear());
+            target.setMonth(parsedValue.getMonth());
+            target.setDate(parsedValue.getDate());
+          }
+          if (type === 'min') {
+            if (target < this.maxDate) {
+              this.minDate = new Date(target.getTime());
+            }
+          } else {
+            if (target > this.minDate) {
+              this.maxDate = new Date(target.getTime());
+              if (this.minDate && this.minDate > this.maxDate) {
+                this.minDate = null;
+              }
+            }
+          }
+        }
+      },
+
+      handleTimeChange(event, type) {
+        const value = event.target.value;
+        const parsedValue = parseDate(value, 'HH:mm:ss');
+        if (parsedValue) {
+          const target = new Date(type === 'min' ? this.minDate : this.maxDate);
+          if (target) {
+            target.setHours(parsedValue.getHours());
+            target.setMinutes(parsedValue.getMinutes());
+            target.setSeconds(parsedValue.getSeconds());
+          }
+          if (type === 'min') {
+            if (target < this.maxDate) {
+              this.minDate = new Date(target.getTime());
+            }
+          } else {
+            if (target > this.minDate) {
+              this.maxDate = new Date(target.getTime());
+            }
+          }
+        }
+      },
 
       handleRangePick() {
         if (!this.showTime) {
@@ -235,17 +315,27 @@
       },
 
       handleLeftTimePick(value) {
-        if (this.minDate) {
-          this.minDate.setHours(value.getHours());
-          this.minDate.setMinutes(value.getMinutes());
-          this.minDate.setSeconds(value.getSeconds());
-
-          this.minDate = new Date(this.minDate);
+        if (!this.minDate) {
+          this.minDate = new Date();
         }
+        this.minDate.setHours(value.getHours());
+        this.minDate.setMinutes(value.getMinutes());
+        this.minDate.setSeconds(value.getSeconds());
+
+        this.minDate = new Date(this.minDate);
         this.leftTimePickerVisible = false;
       },
 
       handleRightTimePick(value) {
+        if (!this.maxDate) {
+          const now = new Date();
+          if (now >= this.minDate) {
+            this.maxDate = new Date();
+          } else {
+
+          }
+        }
+
         if (this.maxDate) {
           this.maxDate.setHours(value.getHours());
           this.maxDate.setMinutes(value.getMinutes());
@@ -253,6 +343,7 @@
 
           this.maxDate = new Date(this.maxDate);
         }
+
         this.rightTimePickerVisible = false;
       },
 
