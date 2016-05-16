@@ -46,7 +46,7 @@
       return {
         hours,
         minutes
-      }
+      };
     }
     return null;
   };

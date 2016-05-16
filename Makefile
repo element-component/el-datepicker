@@ -1,13 +1,16 @@
+install:
+	@npm --registry=http://registry.npm.taobao.org install
+
 clean:
-	rm -rf lib
+	@rm -rf lib
 
-build: clean
-	cooking build -c cooking.prod.js
+build: install clean
+	@cooking build
 
-dev:
-	cooking watch -c cooking.dev.js
+dev: install
+	@cooking watch
 
 test: build
 
 publish: build
-	npm publish
+	@NODE_ENV=production cooking publish

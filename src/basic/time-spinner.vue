@@ -24,16 +24,16 @@
   import { once, on } from 'wind-dom';
   require('../css/time-spinner.css');
 
-  const getValue = (value) => {
-    if (value === undefined || value === null || value === '') {
-      return null;
-    }
+  // const getValue = (value) => {
+  //   if (value === undefined || value === null || value === '') {
+  //     return null;
+  //   }
 
-    value = Number(value);
-    if (!isNaN(value)) {
-      return value;
-    }
-  };
+  //   value = Number(value);
+  //   if (!isNaN(value)) {
+  //     return value;
+  //   }
+  // };
 
   const TYPE_RANGE_MAP = {
     hours: [0, 23],

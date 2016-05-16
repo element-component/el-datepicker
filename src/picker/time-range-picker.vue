@@ -50,7 +50,6 @@
 </style>
 
 <script type="text/ecmascript-6">
-
   const isDisabled = function(minTime, maxTime) {
     const minValue = minTime.getHours() * 3600 + minTime.getMinutes() * 60 + minTime.getSeconds();
     const maxValue = maxTime.getHours() * 3600 + maxTime.getMinutes() * 60 + maxTime.getSeconds();
@@ -174,14 +173,13 @@
     data() {
       return {
         btnDisabled: isDisabled(this.minTime, this.maxTime)
-      }
+      };
     },
 
     methods: {
       handleChange() {
         this.btnDisabled = isDisabled(this.minTime, this.maxTime);
       },
-
 
       handleConfirm() {
         this.$emit('pick', [this.minTime, this.maxTime]);

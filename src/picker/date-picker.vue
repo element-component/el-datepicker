@@ -38,7 +38,7 @@
 </template>
 
 <script type="text/ecmascript-6">
-  import { getDayCountOfMonth, getFirstDayOfMonth, getWeekNumber, $t, prevMonth, nextMonth } from '../util';
+  import { $t } from '../util';
   require('../css/date-picker.css');
 
   export default {
@@ -261,7 +261,7 @@
       return {
         year: null,
         month: null
-      }
+      };
     },
 
     computed: {
