@@ -147,7 +147,7 @@
 
           if (this.selectionMode === 'week') {
             const start = this.showWeekNumber ? 1 : 0;
-            const end = this.showWeekNumber ?  7 : 6;
+            const end = this.showWeekNumber ? 7 : 6;
             const isWeekActive = this.isWeekActive(row[start + 1]);
 
             row[start].inRange = isWeekActive;
